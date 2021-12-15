@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Arquivo {
+	
+	DadosContato objDadosContato = new DadosContato();
 
 	/*
 	 * Cria o arquivo quando esse não exitir grava dados no arquivo.
@@ -35,7 +37,7 @@ public class Arquivo {
 
 	}
 
-	public String ler(String caminho) {
+	public DadosContato ler(String caminho) {
 
 		String conteudo = "";
 
@@ -51,19 +53,30 @@ public class Arquivo {
 
 			linha = lerArquivo.readLine();
 			while (linha != null) {
-
-				conteudo += linha + "\n";
+				
+				Contato objContato = new Contato();
+				
+				String[] Vetlinha = linha.split(";");
+				
+				objContato.setNome(Vetlinha[0]);
+				objContato.setEmail(Vetlinha[1]);
+				objContato.setTelefone(Vetlinha[2]);
+				objContato.setCidade(Vetlinha[3]);
+				
+				objDadosContato.cadastrarContatos(objContato);
+				
+				
 				linha = lerArquivo.readLine();
 
 			}
 
 			arquivo.close();
-			return conteudo;
+			return objDadosContato;
 
 		} catch (IOException e) {
 
 			System.out.println("ERRO: " + e.getMessage());
-			return "";
+			return null;
 
 		}
 

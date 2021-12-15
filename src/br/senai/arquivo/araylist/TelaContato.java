@@ -12,6 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class TelaContato extends JFrame {
@@ -63,6 +64,8 @@ public class TelaContato extends JFrame {
 		//CONFIGURA CAMINHO DO ARQUIVO
 		caminho = "C:\\Users\\21276440\\Desktop\\CONTATO\\contatos.txt";
 		
+		
+		
 		//EXIBE TOTAL DE CONTATOS CADASTRADOS
 		
 		System.out.println("TOTAL DE CONTATOS: " + objDadosContato.contarContatos());
@@ -92,7 +95,7 @@ public class TelaContato extends JFrame {
 
 		JLabel lblTelefone = new JLabel("TELEFONE:");
 		lblTelefone.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblTelefone.setBounds(91, 142, 66, 15);
+		lblTelefone.setBounds(91, 142, 68, 15);
 		contentPane.add(lblTelefone);
 
 		JLabel lblCidade = new JLabel("CIDADE:");
@@ -124,14 +127,28 @@ public class TelaContato extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				//TESTE DE LEITURA DE DADOS COM OBJETOS DE CONTATO
+				ArrayList<Contato> contatos = new ArrayList<Contato>();
+				objDadosContato = objArquivo.ler(caminho);
+				contatos = objDadosContato.listarContatos();
+				
 				/*** AÇÃO DO BOTÃO CADASTRAR: ***/
 				// RECEBER OS DADOS DIGITADOS NO OBJETO objContato>
 				objContato.setNome(txtNome.getText());
 				objContato.setEmail(txtEmail.getText());
 				objContato.setTelefone(txtTelefone.getText());
 				objContato.setCidade(txtCidade.getText());
+				
+				objDadosContato.cadastrarContatos(objContato);
+								
+				contatos.forEach(contato->{
+					
+					System.out.println("Nome: " + contato.getNome() + " E-mail: " + contato.getEmail() + " Telefone: " + contato.getTelefone() + " Cidade: " + contato.getCidade() );
+					
+				});
+				
 
-				// TRATANDO OS DADOS PARA A INSERÇÃO NO ARQUIVO DE TEXTO
+			/*	// TRATANDO OS DADOS PARA A INSERÇÃO NO ARQUIVO DE TEXTO
 				String texto = "";
 				texto = objContato.getNome() + ";" + objContato.getTelefone() + ";" + objContato.getEmail() + ";"
 						+ objContato.getCidade();
@@ -140,7 +157,7 @@ public class TelaContato extends JFrame {
 				
 				
 				objArquivo.escrever(caminho, texto);
-
+*/
 			}
 		});
 		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 11));
